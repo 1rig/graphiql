@@ -33,6 +33,7 @@ import {
   introspectionQuery,
   introspectionQuerySansSubscriptions,
 } from '../utility/introspectionQueries';
+import {GraphViewer} from "./GraphViewer";
 
 const DEFAULT_DOC_EXPLORER_WIDTH = 350;
 
@@ -318,6 +319,11 @@ export class GraphiQL extends React.Component {
                 onClick={this.handleToggleDocs}>
                 {'Docs'}
               </button>}
+            {<button
+              className="docExplorerShow"
+              onClick={this.handleToggleDocs}>
+              {'Map View'}
+            </button>}
           </div>
           <div
             ref={n => {
@@ -393,6 +399,22 @@ export class GraphiQL extends React.Component {
               {'\u2715'}
             </div>
           </DocExplorer>
+        </div>
+        <div className={docExplorerWrapClasses} style={docWrapStyle}>
+          <div
+            className="docExplorerResizer"
+            onDoubleClick={this.handleDocsResetResize}
+            onMouseDown={this.handleDocsResizeStart}
+          />
+          <GraphViewer
+            ref={c => {
+              this.docExplorerComponent = c;
+            }}
+            schema={this.state.schema}>
+            <div className="docExplorerHide" onClick={this.handleToggleDocs}>
+              {'\u2715'}
+            </div>
+          </GraphViewer>
         </div>
       </div>
     );
